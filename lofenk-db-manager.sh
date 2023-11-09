@@ -45,49 +45,51 @@ if [[ "${found}" -eq 0 ]]; then
     exit 1
 fi
 
+#INSTEAD OF ALL THIS - JUST DO IT ONE AT THE TIME, START WITH JUST UPLOADING TO S3
+# AND RETRIEVING FROM S3 - I CAN JUST WRITE A QUICK FUNCTION THAT GETS THE CREDENTIALS FROM 
+# SETTINGS.PY, AND SO DO S3 FIRST, THEN LITTLE BY LITTLE DO THE OTHER FUNCTIONS
+
+# # RETRIEVING ALL SECRETS
+# credentials=$(python aws_get_secret.py $AWS_SECRETS_NAME $AWS_SECRETS_REGION)
+# db_credentials=$(echo "$credentials" | tr -d '\n')
+
+# # BASTION
+# BASTION_INSTANCE_ID=$(echo "$db_credentials" | jq -r '.BASTION_INSTANCE_ID')
+# BASTION_WORKPATH=$(echo "$db_credentials" | jq -r '.BASTION_WORKPATH')
+
+# # LOCAL
+# LOCAL_WORKPATH=$(echo "$db_credentials" | jq -r '.LOCAL_WORKPATH')
+
+# # POSTGRES
+# PG_PASS_PROD=$(echo "$db_credentials" | jq -r '.PG_PASS_PROD')
+# PG_PASS_TEST=$(echo "$db_credentials" | jq -r '.PG_PASS_TEST')
+# PG_PASS_LOCAL=$(echo "$db_credentials" | jq -r '.PG_PASS_LOCAL')
+
+# PG_USER_PROD=$(echo "$db_credentials" | jq -r '.PG_USER_PROD')
+# PG_USER_TEST=$(echo "$db_credentials" | jq -r '.PG_USER_TEST')
+# PG_USER_LOCAL=$(echo "$db_credentials" | jq -r '.PG_USER_LOCAL')
+
+# PG_SUPERUSER_PROD=$(echo "$db_credentials" | jq -r '.PG_SUPERUSER_PROD')
+# PG_SUPERUSER_TEST=$(echo "$db_credentials" | jq -r '.PG_SUPERUSER_TEST')
+# PG_SUPERUSER_LOCAL=$(echo "$db_credentials" | jq -r '.PG_SUPERUSER_LOCAL')
+
+# PG_NAME_PROD=$(echo "$db_credentials" | jq -r '.PG_NAME_PROD')
+# PG_NAME_TEST=$(echo "$db_credentials" | jq -r '.PG_NAME_TEST')
+# PG_NAME_LOCAL=$(echo "$db_credentials" | jq -r '.PG_NAME_LOCAL')
 
 
-# RETRIEVING ALL SECRETS
-credentials=$(python aws_get_secret.py $AWS_SECRETS_NAME $AWS_SECRETS_REGION)
-db_credentials=$(echo "$credentials" | tr -d '\n')
+# # RDS
+# RDS_PASSWORD=$(echo "$db_credentials" | jq -r '.RDS_PASSWORD')
+# RDS_ENDPOINT=$(echo "$db_credentials" | jq -r '.RDS_ENDPOINT')
+# RDS_USER=$(echo "$db_credentials" | jq -r '.RDS_USER')
+# RDS_DBNAME=$(echo "$db_credentials" | jq -r '.RDS_DBNAME')
+# RDS_IDENTIFIER=$(echo "$db_credentials" | jq -r '.RDS_DB_IDENTIFIER')
 
-# BASTION
-BASTION_INSTANCE_ID=$(echo "$db_credentials" | jq -r '.BASTION_INSTANCE_ID')
-BASTION_WORKPATH=$(echo "$db_credentials" | jq -r '.BASTION_WORKPATH')
-
-# LOCAL
-LOCAL_WORKPATH=$(echo "$db_credentials" | jq -r '.LOCAL_WORKPATH')
-
-# POSTGRES
-PG_PASS_PROD=$(echo "$db_credentials" | jq -r '.PG_PASS_PROD')
-PG_PASS_TEST=$(echo "$db_credentials" | jq -r '.PG_PASS_TEST')
-PG_PASS_LOCAL=$(echo "$db_credentials" | jq -r '.PG_PASS_LOCAL')
-
-PG_USER_PROD=$(echo "$db_credentials" | jq -r '.PG_USER_PROD')
-PG_USER_TEST=$(echo "$db_credentials" | jq -r '.PG_USER_TEST')
-PG_USER_LOCAL=$(echo "$db_credentials" | jq -r '.PG_USER_LOCAL')
-
-PG_SUPERUSER_PROD=$(echo "$db_credentials" | jq -r '.PG_SUPERUSER_PROD')
-PG_SUPERUSER_TEST=$(echo "$db_credentials" | jq -r '.PG_SUPERUSER_TEST')
-PG_SUPERUSER_LOCAL=$(echo "$db_credentials" | jq -r '.PG_SUPERUSER_LOCAL')
-
-PG_NAME_PROD=$(echo "$db_credentials" | jq -r '.PG_NAME_PROD')
-PG_NAME_TEST=$(echo "$db_credentials" | jq -r '.PG_NAME_TEST')
-PG_NAME_LOCAL=$(echo "$db_credentials" | jq -r '.PG_NAME_LOCAL')
-
-
-# RDS
-RDS_PASSWORD=$(echo "$db_credentials" | jq -r '.RDS_PASSWORD')
-RDS_ENDPOINT=$(echo "$db_credentials" | jq -r '.RDS_ENDPOINT')
-RDS_USER=$(echo "$db_credentials" | jq -r '.RDS_USER')
-RDS_DBNAME=$(echo "$db_credentials" | jq -r '.RDS_DBNAME')
-RDS_IDENTIFIER=$(echo "$db_credentials" | jq -r '.RDS_DB_IDENTIFIER')
-
-# S3
-S3_BUCKET=$(echo "$db_credentials" | jq -r '.S3_BUCKET')
-S3_RDS_BACKUP_DIR=$(echo "$db_credentials" | jq -r '.S3_RDS_BACKUP_DIR')
-S3_LOCAL_BACKUP_DIR=$(echo "$db_credentials" | jq -r '.S3_LOCAL_BACKUP_DIR')
-S3_DB_PREFIX=$(echo "$db_credentials" | jq -r '.S3_DB_PREFIX')
+# # S3
+# S3_BUCKET=$(echo "$db_credentials" | jq -r '.S3_BUCKET')
+# S3_RDS_BACKUP_DIR=$(echo "$db_credentials" | jq -r '.S3_RDS_BACKUP_DIR')
+# S3_LOCAL_BACKUP_DIR=$(echo "$db_credentials" | jq -r '.S3_LOCAL_BACKUP_DIR')
+# S3_DB_PREFIX=$(echo "$db_credentials" | jq -r '.S3_DB_PREFIX')
 
 
 # POLL FUNCTION -- Retrieves and prints the output

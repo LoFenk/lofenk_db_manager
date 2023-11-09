@@ -2,7 +2,14 @@ DESCRIPTION
 This app is used to backup and restore a databases between: local / S3 / RDS
 
 
+---------------
+notes
+so instead of doing it like that I'll just do it with different arguments
+And all the credentials will be dictionaries in settings.py
+---------------
+
 STEP BY STEP INSTALLATION
+
 
 
 
